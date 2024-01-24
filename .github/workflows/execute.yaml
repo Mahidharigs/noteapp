@@ -54,4 +54,16 @@ jobs:
       run: ./sl analyze --app calculator --wait --cpg
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+    - name: Log in to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+          login-server: noteapp.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build and push an image to Azure Container Registry
+      run: |
+          docker build . -t noteapp.azurecr.io/noteapp:note
+          docker push noteapp.azurecr.io/noteapp:note
+
 
