@@ -4,7 +4,8 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "http-server . -p 8080"
   },
   "keywords": [],
   "author": "",
