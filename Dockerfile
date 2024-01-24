@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 RUN npm install --global http-server
 RUN npm install --global serve
-RUN npm start
+
 
 # Bundle the source code inside the Docker image
 COPY . .
@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 3000
 
 # Define the command to run your app (use CMD ["executable", "param1", "param2"] format)
-CMD ["node", "app.js"]
+CMD ["node", "app.js", "script.js"]
