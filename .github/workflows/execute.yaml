@@ -33,3 +33,16 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+    - name: Depcheck
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+          project: 'noteapp'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+    - name: Upload Test results
+      uses: actions/upload-artifact@master
+      with:
+          name: Depcheck report
+          path: ${{github.workspace}}/reports
+
