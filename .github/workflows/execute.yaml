@@ -65,6 +65,14 @@ jobs:
       run: |
           docker build . -t noteapp.azurecr.io/noteapp:note
           docker push noteapp.azurecr.io/noteapp:note
+
+    - name: Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+         app-name: 'noteapp'
+         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+         images: 'noteapp.azurecr.io/noteapp:note'
+       
           
           
           
