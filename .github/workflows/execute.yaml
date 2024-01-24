@@ -65,5 +65,6 @@ jobs:
       run: |
           docker build . -t noteapp.azurecr.io/noteapp:note
           docker push noteapp.azurecr.io/noteapp:note
+          
 
 
