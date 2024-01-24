@@ -46,3 +46,12 @@ jobs:
           name: Depcheck report
           path: ${{github.workspace}}/reports
 
+    - name: Download ShiftLeft NG SAST
+      run: |
+          curl https://cdn.shiftleft.io/download/sl > sl && chmod a+rx sl
+          
+    - name: Run ShiftLeft NG SAST
+      run: ./sl analyze --app calculator --wait --cpg
+      env:
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+
