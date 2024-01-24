@@ -9,6 +9,9 @@ COPY package*.json ./
 
 # Install any needed packages specified in package.json
 RUN npm install
+RUN npm install --global http-server
+RUN npm install --global serve
+RUN npm start
 
 # Bundle the source code inside the Docker image
 COPY . .
