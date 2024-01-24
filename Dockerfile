@@ -18,7 +18,7 @@ COPY . .
 
 # Make the container's port available to the outside
 # This should match with the port that your app listens on
-EXPOSE 3000
+EXPOSE 8080
 
 # Define the command to run your app (use CMD ["executable", "param1", "param2"] format)
 CMD ["node", "app.js", "script.js"]
