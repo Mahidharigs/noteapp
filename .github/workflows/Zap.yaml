@@ -22,10 +22,10 @@ jobs:
     - name: Run OWASP ZAP Baseline Scan
       run: |
         # Pull the OWASP ZAP Docker image
-        docker pull owasp/zap2docker-stable
+        docker pull zaproxy/zap-stable
         
         # Start ZAP in daemon mode
-        docker run -d --name zap -u zap -p 8080:8080 owasp/zap2docker-stable zap-baseline.py -t https://igsglobal.com
+        docker run -d --name zap -u zap -p 8080:8080 zaproxy/zap-stable zap-baseline.py -t https://igsglobal.com
         
         # Run the scan and store the results in a file
         docker exec zap zap-cli quick-scan -r reports/zap_report.html https://igsglobal.com
