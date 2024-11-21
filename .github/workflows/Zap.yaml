@@ -20,7 +20,7 @@ jobs:
       # Step 2: Set up directories and fix permissions
       - name: Set up directories and fix permissions
         run: |
-          # Create necessary directories
+          # Create necessary directories if they do not exist
           mkdir -p $GITHUB_WORKSPACE/zap-reports
           mkdir -p $GITHUB_WORKSPACE/zap-wrk
           
