@@ -28,10 +28,10 @@ jobs:
         mkdir -p $PWD/zap-reports
 
         # Start ZAP in daemon mode with volume mounting
-        docker run -d --name zap -u zap -p 8080:8080 -v $PWD/zap-reports:/zap/reports zaproxy/zap-stable
+        docker run -d --name zap -u zap -p 8080:8080 -v $PWD/zap-reports:/zap/reports zaproxy/zap-stable:2.15.0
         
-        # Wait for a few seconds to ensure ZAP is fully started and ready to scan
-        sleep 15
+        # Wait for a longer period to ensure ZAP is fully started
+        sleep 30
         
         # Check if the container is running, log its status for debugging
         docker ps
