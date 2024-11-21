@@ -10,20 +10,29 @@ on:
 
 jobs:
   owasp-zap-scan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # VM that runs the job
+
     steps:
       # Step 1: Check out the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Create directories and fix permissions
+      # Step 2: Set up directories and fix permissions
       - name: Set up directories and fix permissions
         run: |
+          # Create necessary directories
           mkdir -p $GITHUB_WORKSPACE/zap-reports
           mkdir -p $GITHUB_WORKSPACE/zap-wrk
-          sudo chown -R $USER:$USER $GITHUB_WORKSPACE/zap-reports $GITHUB_WORKSPACE/zap-wrk
+          
+          # Ensure the directories have proper read-write permissions
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE/zap-reports
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE/zap-wrk
 
-      # Step 3: Run ZAP scan with correct permissions and rw mount
+          # Set read-write permissions on the directories
+          sudo chmod -R 777 $GITHUB_WORKSPACE/zap-reports
+          sudo chmod -R 777 $GITHUB_WORKSPACE/zap-wrk
+
+      # Step 3: Run ZAP scan with correct permissions and mount volumes
       - name: Run ZAP Scan
         run: |
           docker run -t \
