@@ -12,21 +12,27 @@ jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Check out the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Create directories
+      # Step 2: Create directories and set permissions
+      - name: Set up directories and fix permissions
         run: |
           mkdir -p $GITHUB_WORKSPACE/zap-reports
           mkdir -p $GITHUB_WORKSPACE/zap-wrk
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE/zap-reports $GITHUB_WORKSPACE/zap-wrk
 
+      # Step 3: Run ZAP scan
       - name: Run ZAP Scan
         run: |
+          # Run the ZAP scan with the correct mounts
           docker run -t \
             -v $GITHUB_WORKSPACE/zap-reports:/zap/reports \
-            -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk:rw \
+            -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk \
             zaproxy/zap-stable:2.15.0 zap-baseline.py -t https://google.com -r /zap/reports/zap-report.html
 
+      # Step 4: Upload the ZAP scan report as an artifact
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
         with:
