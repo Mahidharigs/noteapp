@@ -25,7 +25,7 @@ jobs:
           docker run -t \
             -v $GITHUB_WORKSPACE/zap-reports:/zap/reports \
             -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk:rw \
-            zaproxy/zap2docker-stable:latest zap-baseline.py -t https://google.com -r /zap/reports/zap-report.html
+            zaproxy/zap-stable:2.15.0 zap-baseline.py -t https://google.com -r /zap/reports/zap-report.html
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
