@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Create directories and set permissions
+      # Step 2: Create directories and fix permissions
       - name: Set up directories and fix permissions
         run: |
           mkdir -p $GITHUB_WORKSPACE/zap-reports
@@ -26,7 +26,6 @@ jobs:
       # Step 3: Run ZAP scan with correct permissions and rw mount
       - name: Run ZAP Scan
         run: |
-          # Run the ZAP scan with rw mount for both directories
           docker run -t \
             -v $GITHUB_WORKSPACE/zap-reports:/zap/reports:rw \
             -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk:rw \
