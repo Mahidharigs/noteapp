@@ -19,11 +19,15 @@ jobs:
       # Step 2: Set up OWASP ZAP using the Docker container
       - name: Run ZAP Scan
         run: |
-          # Create a directory for the ZAP report
+          # Create directories for the ZAP report and working directory
           mkdir -p $GITHUB_WORKSPACE/zap-reports
-          
+          mkdir -p $GITHUB_WORKSPACE/zap-wrk
+
           # Run ZAP scan against the target URL and save the report
-          docker run -t -v $GITHUB_WORKSPACE/zap-reports:/zap/reports zaproxy/zap-stable:2.15.0 zap-baseline.py -t https://google.com -r /zap/reports/zap-report.html
+          docker run -t \
+            -v $GITHUB_WORKSPACE/zap-reports:/zap/reports \
+            -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk \
+            zaproxy/zap-stable:2.15.0 zap-baseline.py -t https://google.com -r /zap/reports/zap-report.html
 
       # Step 3: Upload the ZAP scan report as an artifact
       - name: Upload ZAP Report
