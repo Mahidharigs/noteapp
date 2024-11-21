@@ -22,7 +22,7 @@ jobs:
     - name: Run OWASP ZAP Baseline Scan
       run: |
         # Pull the OWASP ZAP Docker image
-        docker pull zaproxy/zap-stable
+        docker pull zaproxy/zap-stable:2.15.0
         
         # Create a directory to store ZAP reports and configurations
         mkdir -p $PWD/zap-reports
