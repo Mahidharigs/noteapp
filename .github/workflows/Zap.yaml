@@ -10,7 +10,7 @@ on:
 
 jobs:
   owasp-zap-scan:
-    runs-on: ubuntu-latest  # VM that runs the job
+    runs-on: ubuntu-latest
 
     steps:
       # Step 1: Check out the code from the repository
@@ -47,3 +47,4 @@ jobs:
         with:
           name: zap-report
           path: $GITHUB_WORKSPACE/zap-reports/zap-report.html
+
