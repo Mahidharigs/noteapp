@@ -29,10 +29,14 @@ jobs:
 
         # Start ZAP in daemon mode with volume mounting
         docker run -d --name zap -u zap -p 8080:8080 -v $PWD/zap-reports:/zap/reports zaproxy/zap-stable
-
-        # Wait for a few seconds to ensure ZAP is fully started and ready to scan
-        sleep 10
         
+        # Wait for a few seconds to ensure ZAP is fully started and ready to scan
+        sleep 15
+        
+        # Check if the container is running, log its status for debugging
+        docker ps
+        docker logs zap
+
         # Run the baseline scan on the application URL (replace this with your app URL) and store the results
         docker exec zap zap-baseline.py -t https://google.com -g gen.conf -r /zap/reports/zap_report.html
 
