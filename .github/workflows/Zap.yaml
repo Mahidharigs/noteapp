@@ -23,13 +23,14 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/zap-wrk
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE/zap-reports $GITHUB_WORKSPACE/zap-wrk
 
-      # Step 3: Run ZAP scan
+      # Step 3: Run ZAP scan with correct permissions and rw mount
       - name: Run ZAP Scan
         run: |
-          # Run the ZAP scan with the correct mounts
+          # Run the ZAP scan with rw mount for both directories
           docker run -t \
-            -v $GITHUB_WORKSPACE/zap-reports:/zap/reports \
-            -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk \
+            -v $GITHUB_WORKSPACE/zap-reports:/zap/reports:rw \
+            -v $GITHUB_WORKSPACE/zap-wrk:/zap/wrk:rw \
+            --user $(id -u):$(id -g) \
             zaproxy/zap-stable:2.15.0 zap-baseline.py -t https://google.com -r /zap/reports/zap-report.html
 
       # Step 4: Upload the ZAP scan report as an artifact
