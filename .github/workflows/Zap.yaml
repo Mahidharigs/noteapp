@@ -25,10 +25,11 @@ jobs:
         run: |
           docker pull zaproxy/zap-stable:latest
 
-      # Step 4: Run ZAP Scan against your application
-      - name: Run ZAP Scan with Debug
+      # Step 4: Run ZAP Scan against your application and capture logs
+      - name: Run ZAP Scan with Debug and Capture Logs
         run: |
-          docker run --rm -v ${{ github.workspace }}:/zap/wrk zaproxy/zap-stable:latest zap-baseline.py -t https://igsglobal.com/our-solutions -r /zap/wrk/zap-report.html -d
+          docker run --rm -v ${{ github.workspace }}:/zap/wrk zaproxy/zap-stable:latest zap-baseline.py -t https://igsglobal.com/our-solutions -r /zap/wrk/zap-report.html -d > zap.log 2>&1
+          cat zap.log
           if [ $? -ne 0 ]; then
             echo "ZAP scan failed with exit code $?"
             exit 1
