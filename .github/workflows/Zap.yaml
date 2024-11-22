@@ -1,46 +1,15 @@
 name: OWASP ZAP Scan
-
 on:
   push:
     branches:
       - main
-
 jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      # Step 1: Check out the code from the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Step 2: Ensure correct permissions for the workspace directory
-      - name: Set permissions for workspace
-        run: |
-          sudo chmod -R 777 ${{ github.workspace }}
-
-      # Step 3: Set up OWASP ZAP using the Docker container
-      - name: Set up OWASP ZAP
-        run: |
-          docker pull zaproxy/zap-stable:2.12.0  # Use a specific version of ZAP
-
-      # Step 4: Test connectivity to the target URL
-      - name: Test Connectivity to Target URL
-        run: |
-          docker run --rm zaproxy/zap-stable:latest curl -I https://igsglobal.com/our-solutions
-
-      # Step 5: Run ZAP Scan with Debug and Capture Logs
-      - name: Run ZAP Scan with Debug and Capture Logs
-        run: |
-          docker run --rm -v ${{ github.workspace }}:/zap/wrk zaproxy/zap-stable:2.12.0 zap-baseline.py -t https://igsglobal.com/our-solutions -r /zap/wrk/zap-report.html -d > zap.log 2>&1
-          cat zap.log  # Print out ZAP logs for debugging
-          if [ $? -ne 0 ]; then
-            echo "ZAP scan failed with exit code $?"
-            exit 1
-          fi
-
-      # Step 6: Upload the ZAP scan report as an artifact
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v3
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.11.0
         with:
-          name: zap-report
-          path: ${{ github.workspace }}/zap-report.html
+         target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
