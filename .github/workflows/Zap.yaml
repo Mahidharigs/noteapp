@@ -10,33 +10,33 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
      issues: write
-    
     steps:
-    # Step 1: Check out the code from the repository
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      # Step 1: Check out the code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    # Step 2: Ensure correct permissions for the workspace directory
-    - name: Set permissions for workspace
-      run: |
-        # Grant read-write permissions to the workspace directory
-        sudo chmod -R 777 ${{ github.workspace }}
+      # Step 2: Ensure correct permissions for the workspace directory
+      - name: Set permissions for workspace
+        run: |
+          sudo chmod -R 777 ${{ github.workspace }}
 
-    # Step 3: Set up OWASP ZAP using the Docker container
-    - name: Set up OWASP ZAP
-      run: |
-        # Ensure we are pulling the latest version of the ZAP image
-        docker pull ghcr.io/zaproxy/zaproxy:stable
+      # Step 3: Set up OWASP ZAP using the Docker container
+      - name: Set up OWASP ZAP
+        run: |
+          docker pull zaproxy/zap-stable:latest
 
-    # Step 4: Run ZAP Scan against your application
-    - name: Run ZAP Scan
-      run: |
-        # Mount the workspace directory and generate the report at a known location
-        docker run --rm -v ${{ github.workspace }}:/zap/wrk ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t https://igsglobal.com/our-solutions -r /zap/wrk/zap-report.html
+      # Step 4: Run ZAP Scan against your application
+      - name: Run ZAP Scan with Debug
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/zap/wrk zaproxy/zap-stable:latest zap-baseline.py -t https://igsglobal.com/our-solutions -r /zap/wrk/zap-report.html -d
+          if [ $? -ne 0 ]; then
+            echo "ZAP scan failed with exit code $?"
+            exit 1
+          fi
 
-    # Step 5: Upload the ZAP scan report as an artifact
-    - name: Upload ZAP Report
-      uses: actions/upload-artifact@v3
-      with:
-        name: zap-report
-        path: ${{ github.workspace }}/zap-report.html
+      # Step 5: Upload the ZAP scan report as an artifact
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: ${{ github.workspace }}/zap-report.html
