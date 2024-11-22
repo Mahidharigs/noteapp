@@ -9,7 +9,7 @@ jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
     permissions:
-    issue: write
+     issues: write
     
     steps:
     # Step 1: Check out the code from the repository
