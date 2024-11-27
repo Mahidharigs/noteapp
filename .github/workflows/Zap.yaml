@@ -19,3 +19,7 @@ jobs:
         run: |
           echo "Filtering False Positives"
           python filter_false_positives.py
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ZAP-Report
