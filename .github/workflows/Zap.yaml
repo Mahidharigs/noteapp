@@ -1,34 +1,25 @@
 name: OWASP ZAP Scan
-
 on:
   push:
     branches:
       - main
-
 jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
-          # Path to the rules file
-          rules-file-path: '.github/workflows/.zap-rules.yaml'
-          
-          # Path to the settings file (e.g., alerts exclusions or threshold settings)
-          zap-settings-file-path: '.github/workflows/.zap-settings'
-          
-          # Target URL for the ZAP scan
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-
-      - name: Upload ZAP Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: zap-scan-report
-          path: zap_report.html  # Specify the location of the generated report
+          rules_file_name: '.github/workflows/.zap-rules.yaml'   # Correct input for custom rules
+          cmd_options: '-c .github/workflows/.zap-rules.yaml -J report_json.json -w report_md.md -r report_html.html'   # Additional ZAP options
+          
+      - name: Filter False Positives
+        run: |
+          echo "Filtering False Positives"
+          python filter_false_positives.py report_json.json  # Assuming the report is in JSON format
