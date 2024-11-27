@@ -17,7 +17,7 @@ jobs:
         with:
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
           rules_file_name: '.github/workflows/.zap-rules.yaml'   # Correct input for custom rules
-          cmd_options: '-c .github/workflows/.zap-rules.yaml -J report_json.json -w report_md.md -r report_html.html'   # Additional ZAP options
+          cmd_options: '-J report_json.json -w report_md.md -r report_html.html'   # Additional ZAP options
           
       - name: Filter False Positives
         run: |
