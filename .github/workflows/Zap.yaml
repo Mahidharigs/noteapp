@@ -10,25 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
+
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: Validate Configuration Files
-        run: |
-          ls -l .github/workflows/.zap-settings
-          ls -l .github/workflows/.zap-rules.yaml
-
-      - name: Set Permissions
-        run: chmod 666 .github/workflows/.zap-settings .github/workflows/.zap-rules.yaml
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
+          # Path to the rules file
           rules-file-path: '.github/workflows/.zap-rules.yaml'
+          
+          # Path to the settings file (e.g., alerts exclusions or threshold settings)
           zap-settings-file-path: '.github/workflows/.zap-settings'
+          
+          # Target URL for the ZAP scan
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-   
-     
-      - name: Filter False Positives
-        run: python .github/workflows/filter_false_positives.py
+
+      - name: Upload ZAP Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-scan-report
+          path: zap_report.html  # Specify the location of the generated report
