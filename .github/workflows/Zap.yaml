@@ -9,7 +9,7 @@ jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
     permissions:
-      issues: write read
+      issues: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
