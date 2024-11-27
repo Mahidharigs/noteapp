@@ -13,3 +13,5 @@ jobs:
         uses: zaproxy/action-full-scan@v0.11.0
         with:
          target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
+         rules-file-path: '.zap-rules'
+         zap-settings-file-path: '.zap-settings'
