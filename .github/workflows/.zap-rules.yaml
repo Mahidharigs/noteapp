@@ -1,5 +1,5 @@
 rules:
-  - id: 10035   # Example: Strict trasport security not enforced
+  - id: 10035-1   # Example: Strict trasport security not enforced
     action: ignore
     reason: "False positive for our application environment."
 
@@ -16,7 +16,7 @@ rules:
    # reason: "Critical vulnerability that must be addressed."
 
 # Optional: Define a threshold for allowed alerts
-#alert-threshold:
- # medium: 5      # Allow up to 5 medium-risk alerts
-#  high: 0        # No high-risk alerts allowed
+alert-threshold:
+  medium: 0     # Allow up to 5 medium-risk alerts
+  high: 0        # No high-risk alerts allowed
  # informational: 10  # Allow up to 10 informational alerts
