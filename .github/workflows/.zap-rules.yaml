@@ -1,0 +1,22 @@
+rules:
+  - id: 10035   # Example: Strict trasport security not enforced
+    action: ignore
+    reason: "False positive for our application environment."
+
+ # - id: 10021   # Example: X-Frame-Options header not set
+  #  action: ignore
+   # reason: "This is not required for our API responses."
+
+ # - id: 40014   # Example: Cross-Domain JavaScript Source File Inclusion
+  #  action: warn
+   # reason: "Investigate further if critical endpoints are affected."
+
+ # - id: 20012   # Example: Application Error Disclosure
+  #  action: fail
+   # reason: "Critical vulnerability that must be addressed."
+
+# Optional: Define a threshold for allowed alerts
+#alert-threshold:
+ # medium: 5      # Allow up to 5 medium-risk alerts
+#  high: 0        # No high-risk alerts allowed
+ # informational: 10  # Allow up to 10 informational alerts
