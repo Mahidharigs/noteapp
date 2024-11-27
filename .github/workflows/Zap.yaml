@@ -9,7 +9,7 @@ jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      issues: write, read
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -22,14 +22,10 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
-          target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
           rules-file-path: '.github/workflows/.zap-rules.yaml'
           zap-settings-file-path: '.github/workflows/.zap-settings'
-
-      - name: Debug Alerts
-        run: |
-          docker run -v $(pwd):/zap/wrk/ owasp/zap2docker-stable zap-cli report -o zap_results.json -f json
-          cat zap_results.json
-
+          target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
+   
+     
       - name: Filter False Positives
         run: python filter_false_positives.py
