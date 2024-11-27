@@ -1,8 +1,5 @@
-name: OWASP ZAP Scan
-on:
-  push:
-    branches:
-      - main
+on: [push]
+
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
