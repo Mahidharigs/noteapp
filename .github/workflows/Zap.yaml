@@ -16,15 +16,15 @@ jobs:
 
       - name: Validate Configuration Files
         run: |
-          ls -l .zap-settings
-          ls -l .zap-rules.yaml
+          ls -l .github/workflows/.zap-settings
+          ls -l .github/workflows/.zap-rules.yaml
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-          rules-file-path: '.zap-rules.yaml'
-          zap-settings-file-path: '.zap-settings'
+          rules-file-path: '.github/workflows/.zap-rules.yaml'
+          zap-settings-file-path: '.github/workflows/.zap-settings'
 
       - name: Debug Alerts
         run: |
