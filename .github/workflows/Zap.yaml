@@ -9,6 +9,10 @@ jobs:
     permissions:
       issues: write
     steps:
+     - name: Validate Configuration Files
+        run: |
+          ls -l .zap-settings
+          ls -l .zap-rules.yaml
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
