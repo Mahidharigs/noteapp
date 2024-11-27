@@ -1,22 +1,55 @@
 name: OWASP ZAP Scan
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  owasp-zap-scan:
+  zap_scan:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      contents: read
+      security-events: write
     steps:
-      - name: Checkout Repository
+      # Step 1: Check out the repository
+      - name: Checkout Code
         uses: actions/checkout@v4
+        
+      # Step 2: Create or ensure the rules JSON file exists
+      - name: Ensure ZAP Rules File
+        run: |
+          echo '{
+            "rules": [
+              {
+                "id": "10035",
+                "action": "IGNORE"
+              },
+              {
+                "id": "40012",
+                "action": "FAIL"
+              },
+              {
+                "id": "90022",
+                "action": "WARN"
+              }
+            ]
+          }' > zap-rules.json
 
-      - name: ZAP Scan
+      # Step 3: Run ZAP Full Scan with the rules file
+      - name: Run OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.12.0
         with:
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-          rules_file_name: '.github/workflows/.zap-rules.yaml'   # Correct input for custom rules
-          cmd_options: '-J report_json.json -w report_md.md -r report_html.html'   # Additional ZAP options
-          
+          rules_file_name: 'zap-rules.json'
+          cmd_options: '-d'
 
+      # Step 4: Upload ZAP Scan Report as an Artifact
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-scan-report
+          path: |
+            report_html.html
+            report_md.md
+            report_json.json
