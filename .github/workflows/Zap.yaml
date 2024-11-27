@@ -10,27 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write
     steps:
-      # Step 1: Check out the repository
       - name: Checkout Code
         uses: actions/checkout@v4
-        
-      
-      # Step 3: Run ZAP Full Scan with the rules file
+
+      - name: Verify Rules File
+        run: ls -l .github/workflows/
+
+      - name: Debug Rules File
+        run: cat .github/workflows/rules.zap
+
       - name: Run OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.12.0
         with:
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-          rules_file_name: '.github/workflows/rules.json'
-          cmd_options: '-c .github/workflows/rules.json'
-
-      # Step 4: Upload ZAP Scan Report as an Artifact
-      - name: Upload Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: zap-scan-report
-          path: |
-            report_html.html
-            report_md.md
-            report_json.json
+          rules_file_name: '.github/workflows/rules.zap'
