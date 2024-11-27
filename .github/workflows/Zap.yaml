@@ -16,33 +16,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         
-      # Step 2: Create or ensure the rules JSON file exists
-      - name: Ensure ZAP Rules File
-        run: |
-          echo '{
-            "rules": [
-              {
-                "id": "10035",
-                "action": "IGNORE"
-              },
-              {
-                "id": "40012",
-                "action": "FAIL"
-              },
-              {
-                "id": "90022",
-                "action": "WARN"
-              }
-            ]
-          }' > zap-rules.json
-
+      
       # Step 3: Run ZAP Full Scan with the rules file
       - name: Run OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.12.0
         with:
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-          rules_file_name: 'zap-rules.json'
-          cmd_options: '-d'
+          rules_file_name: '.github/workflows/rules.json'
+          cmd_options: '-c .github/workflows/rules.json'
 
       # Step 4: Upload ZAP Scan Report as an Artifact
       - name: Upload Report
