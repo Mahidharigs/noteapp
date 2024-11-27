@@ -12,14 +12,8 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
         with:
+         rules-file-path: '.github/workflows/.zap-rules.yaml'
+         zap-settings-file-path: '.github/workflows/.zap-settings'
          target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
-         rules-file-path: '.zap-rules.yaml'
-         zap-settings-file-path: '.zap-settings'
-      - name: Filter False Positives
-        run: |
-          echo "Filtering False Positives"
-          python filter_false_positives.py
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: ZAP-Report
+         
+
