@@ -15,3 +15,7 @@ jobs:
          target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
          rules-file-path: '.zap-rules.yaml'
          zap-settings-file-path: '.zap-settings'
+      - name: Filter False Positives
+        run: |
+          echo "Filtering False Positives"
+          python filter_false_positives.py
