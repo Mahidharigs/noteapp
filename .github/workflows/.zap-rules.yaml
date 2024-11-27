@@ -1,5 +1,5 @@
 rules:
-  - id: 10035-1   # Example: Strict trasport security not enforced
+  - pluginid: 10035-1   # Example: Strict trasport security not enforced
     action: ignore
     reason: "False positive for our application environment."
 
