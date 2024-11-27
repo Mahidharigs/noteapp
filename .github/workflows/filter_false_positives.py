@@ -5,7 +5,7 @@ with open("zap_results.json") as file:
 
 filtered_alerts = [
     alert for alert in results['alerts']
-    if alert['pluginId'] not in {"10035"}  # Add plugin IDs to exclude
+    if alert['pluginId'] not in {"10035-1"}  # Add plugin IDs to exclude
 ]
 
 with open("filtered_results.json", "w") as file:
