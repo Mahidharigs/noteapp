@@ -1,6 +1,6 @@
 # Exclude specific alert types
 alerts.exclude:
-  - "10035-1"  # Example: Strict transport security header not set
+  - "10035"  # Example: Strict transport security header not set
 
 # Exclude specific URLs
 url.exclude:
