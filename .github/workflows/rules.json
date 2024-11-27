@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "id": "10035",
+      "action": "IGNORE"
+    },
+    {
+      "id": "40012",
+      "action": "FAIL"
+    },
+    {
+      "id": "90022",
+      "action": "WARN"
+    }
+  ]
+}
