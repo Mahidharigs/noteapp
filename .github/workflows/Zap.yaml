@@ -9,7 +9,7 @@ jobs:
   owasp-zap-scan:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      issues: write read
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
           ls -l .github/workflows/.zap-rules.yaml
 
       - name: Set Permissions
-        run: chmod 666 .zap-settings .zap-rules.yaml
+        run: chmod 666 .github/workflows/.zap-settings .github/workflows/.zap-rules.yaml
 
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.11.0
