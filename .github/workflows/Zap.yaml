@@ -26,10 +26,4 @@ jobs:
           target: 'https://mlshoppreprod.mlhuillier.com/jewelryback/Account/OrderDetails?OrderNumber=MLMDKEXTVBL&OrderId=O20241007135949882172'
           rules_file_name: '.github/workflows/rules.zap'
 
-      - name: Install zap-cli
-        run: |
-         pip install zap-cli
-
-      - name: Generate Reports
-        run: |
-         zap-cli report -o html -p /zap/wrk/reports/ -i /zap/wrk/scans/latest/scan_results.json --ignore "ignore"
+     
